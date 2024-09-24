@@ -22,7 +22,7 @@ const RequestSuccess = async ({
       <div className="success-img">
         <Link href="/">
           <Image
-            src="/assets/icons/logo-full.svg"
+            src="/assets/icons/Doxset.svg"
             height={1000}
             width={1000}
             alt="logo"
@@ -32,9 +32,9 @@ const RequestSuccess = async ({
 
         <section className="flex flex-col items-center">
           <Image
-            src="/assets/gifs/success.gif"
-            height={300}
-            width={280}
+            src="/assets/images/Success.svg"
+            height={150}
+            width={150}
             alt="success"
           />
           <h2 className="header mb-6 max-w-[600px] text-center">
@@ -73,7 +73,7 @@ const RequestSuccess = async ({
           </Link>
         </Button>
 
-        <p className="copyright">© 2024 CarePluse</p>
+        <p className="copyright">© 2024 Doxset</p>
       </div>
     </div>
   );

@@ -183,7 +183,7 @@
 
   /* =====  SHADCN OVERRIDES */
   .shad-primary-btn {
-    @apply bg-green-500 text-white !important;
+    @apply bg-[#fef4d9] text-[#1E1D19] !important;
   }
 
   .shad-danger-btn {
