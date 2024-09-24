@@ -76,7 +76,7 @@ export const getRecentAppointmentList = async () => {
           case "pending":
             acc.pendingCount++;
             break;
-          case "canceled":
+          case "cancelled":
             acc.cancelledCount++;
             break;
         }
