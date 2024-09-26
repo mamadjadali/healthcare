@@ -11,7 +11,7 @@ export const {
   NEXT_PUBLIC_BUCKET_ID: BUCKET_ID,
 } = process.env;
 
-const client = new sdk.Client();
+export const client = new sdk.Client();
 
 client.setEndpoint(ENDPOINT!).setProject(PROJECT_ID!).setKey(API_KEY!);
 

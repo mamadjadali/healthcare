@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import { toast } from "sonner";
 
 import { Button } from "@/components/ui/button";
 import { Doctors } from "@/constants";
@@ -11,7 +12,16 @@ const RequestSuccess = async ({
   params: { userId },
 }: SearchParamProps) => {
   const appointmentId = (searchParams?.appointmentId as string) || "";
-  const appointment = await getAppointment(appointmentId);
+  let appointment;
+
+  try {
+    appointment = await getAppointment(appointmentId);
+  } catch (error) {
+    toast.error("Error fetching appointment details. Please try again later.");
+    return (
+      <div>Error fetching appointment details. Please try again later.</div>
+    );
+  }
 
   const doctor = Doctors.find(
     (doctor) => doctor.name === appointment.primaryPhysician
@@ -67,11 +77,17 @@ const RequestSuccess = async ({
           </div>
         </section>
 
-        <Button variant="outline" className="shad-primary-btn" asChild>
-          <Link href={`/patients/${userId}/new-appointment`}>
-            New Appointment
-          </Link>
-        </Button>
+        <div className="flex gap-4">
+          <Button variant="outline" className="shad-primary-btn" asChild>
+            <Link href={`/patients/${userId}/new-appointment`}>
+              New Appointment
+            </Link>
+          </Button>
+
+          <Button variant="outline" className="shad-primary-btn" asChild>
+            <Link href={`/dashboard/${userId}`}>Go to Dashboard</Link>
+          </Button>
+        </div>
 
         <p className="copyright">© 2024 Doxset</p>
       </div>

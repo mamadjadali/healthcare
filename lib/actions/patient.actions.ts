@@ -3,6 +3,7 @@
 import { ID, InputFile, Query } from "node-appwrite";
 
 import {
+  APPOINTMENT_COLLECTION_ID,
   BUCKET_ID,
   DATABASE_ID,
   ENDPOINT,
@@ -106,6 +107,24 @@ export const getPatient = async (userId: string) => {
   } catch (error) {
     console.error(
       "An error occurred while retrieving the patient details:",
+      error
+    );
+  }
+};
+
+// Get Patient Appointments
+
+export const getPatientAppointments = async (userId: string) => {
+  try {
+    const appointments = await databases.listDocuments(
+      DATABASE_ID!,
+      APPOINTMENT_COLLECTION_ID!,
+      [Query.equal("userId", [userId])]
+    );
+    return parseStringify(appointments.documents);
+  } catch (error) {
+    console.error(
+      "An error occurred while retrieving the patient's appointments:",
       error
     );
   }
