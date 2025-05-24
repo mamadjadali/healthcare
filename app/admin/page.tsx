@@ -27,10 +27,8 @@ const AdminPage = async () => {
 
       <main className="admin-main">
         <section className="w-full space-y-4">
-          <h1 className="header">Welcome 👋🏻</h1>
-          <p className="text-dark-700">
-            Start the day with managing new appointments
-          </p>
+          <h1 className="header text-dark-700">Welcome</h1>
+          <p className="text-dark-700">Managing Appointments</p>
         </section>
 
         <section className="admin-stat">

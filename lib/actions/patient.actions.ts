@@ -93,14 +93,22 @@ export const registerPatient = async ({ ...patient }: RegisterUserParams) => {
 
 // GET PATIENT
 export const getPatient = async (userId: string) => {
+  console.log("Querying for userId:", userId);
   try {
     const patients = await databases.listDocuments(
       DATABASE_ID!,
       PATIENT_COLLECTION_ID!,
       [Query.equal("userId", [userId])]
     );
+    console.log("Result:", patients);
+    const patient = patients.documents[0];
 
-    return parseStringify(patients.documents[0]);
+    if (!patient) {
+      console.warn(`❌ No patient found for userId: ${userId}`);
+      return null;
+    }
+    return JSON.parse(JSON.stringify(patient));
+    // return parseStringify(patients.documents[0]);
   } catch (error) {
     console.error(
       "An error occurred while retrieving the patient details:",

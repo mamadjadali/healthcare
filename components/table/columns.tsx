@@ -22,7 +22,14 @@ export const columns: ColumnDef<Appointment>[] = [
     header: "Patient",
     cell: ({ row }) => {
       const appointment = row.original;
-      return <p className="text-14-medium ">{appointment.patient.name}</p>;
+      return (
+        <a
+          href={`admin/details/${appointment.patient.userId}`}
+          className="text-14-medium "
+        >
+          {appointment.patient.name}
+        </a>
+      );
     },
   },
   {
