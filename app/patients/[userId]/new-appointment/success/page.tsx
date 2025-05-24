@@ -40,21 +40,23 @@ const RequestSuccess = async ({
           />
         </Link>
 
-        <section className="flex flex-col items-center">
+        <section className="flex flex-col items-center gap-4">
           <Image
             src="/assets/images/Success.svg"
-            height={150}
-            width={150}
+            height={100}
+            width={100}
             alt="success"
           />
-          <h2 className="header mb-6 max-w-[600px] text-center">
+          <h2 className="header mb-6 max-w-[600px] text-center text-dark-700">
             Your <span className="text-green-500">appointment request</span> has
             been successfully submitted!
           </h2>
-          <p>We&apos;ll be in touch shortly to confirm.</p>
+          <p className="text-dark-700">
+            We&apos;ll be in touch shortly to confirm.
+          </p>
         </section>
 
-        <section className="request-details">
+        <section className="request-details text-dark-700">
           <p>Requested appointment details: </p>
           <div className="flex items-center gap-3">
             <Image

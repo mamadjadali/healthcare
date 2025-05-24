@@ -1,8 +1,8 @@
-import Image from "next/image";
 import Link from "next/link";
 
 import { PatientForm } from "@/components/forms/PatientForm";
 import { PasskeyModal } from "@/components/PasskeyModal";
+import { LogoStatic } from "@/public/assets/icons/LogoStatic";
 
 const Home = ({ searchParams }: SearchParamProps) => {
   const isAdmin = searchParams?.admin === "true";
@@ -12,35 +12,24 @@ const Home = ({ searchParams }: SearchParamProps) => {
       {isAdmin && <PasskeyModal />}
 
       <section className="remove-scrollbar container my-auto">
-        <div className="sub-container max-w-[496px]">
-          <Image
-            src="/assets/icons/Doxset.svg"
-            height={1000}
-            width={1000}
-            alt="patient"
-            className="mb-12 h-10 w-fit"
-          />
+        <div className="sub-container max-w-[400px]">
+          <div className="mb-6 flex flex-col items-center justify-center gap-2">
+            <LogoStatic className="mb-2 size-20" />
+            <p className="text-dark-700">Get started with appointments.</p>
+          </div>
 
           <PatientForm />
 
           <div className="text-14-regular mt-20 flex justify-between">
             <p className="justify-items-end text-dark-600 xl:text-left">
-              © 2024 Doxset
+              © 2025 Doxset
             </p>
-            <Link href="/?admin=true" className="text-[#fef4d9]">
+            <Link href="/?admin=true" className="text-white">
               Admin
             </Link>
           </div>
         </div>
       </section>
-
-      <Image
-        src="/assets/images/onboarding-img.png"
-        height={1000}
-        width={1000}
-        alt="patient"
-        className="side-img max-w-[50%] rounded-l-3xl"
-      />
     </div>
   );
 };

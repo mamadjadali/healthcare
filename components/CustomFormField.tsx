@@ -60,7 +60,7 @@ const RenderInput = ({ field, props }: { field: any; props: CustomProps }) => {
             <Input
               placeholder={props.placeholder}
               {...field}
-              className="shad-input border-0"
+              className="shad-input border-0 text-dark-700"
             />
           </FormControl>
         </div>
@@ -71,7 +71,7 @@ const RenderInput = ({ field, props }: { field: any; props: CustomProps }) => {
           <Textarea
             placeholder={props.placeholder}
             {...field}
-            className="shad-textArea"
+            className="shad-textArea text-dark-700"
             disabled={props.disabled}
           />
         </FormControl>
@@ -80,13 +80,13 @@ const RenderInput = ({ field, props }: { field: any; props: CustomProps }) => {
       return (
         <FormControl>
           <PhoneInput
-            defaultCountry="US"
+            defaultCountry="IR"
             placeholder={props.placeholder}
             international
             withCountryCallingCode
             value={field.value as E164Number | undefined}
             onChange={field.onChange}
-            className="input-phone"
+            className="input-phone text-dark-700"
           />
         </FormControl>
       );
@@ -107,7 +107,7 @@ const RenderInput = ({ field, props }: { field: any; props: CustomProps }) => {
       );
     case FormFieldType.DATE_PICKER:
       return (
-        <div className="flex rounded-md border border-dark-500 bg-dark-400">
+        <div className="flex rounded-md border border-dark-500 bg-dark-400 text-dark-700">
           <Image
             src="/assets/icons/calendar.svg"
             height={24}
@@ -132,7 +132,7 @@ const RenderInput = ({ field, props }: { field: any; props: CustomProps }) => {
         <FormControl>
           <Select onValueChange={field.onChange} defaultValue={field.value}>
             <FormControl>
-              <SelectTrigger className="shad-select-trigger">
+              <SelectTrigger className="shad-select-trigger text-dark-700">
                 <SelectValue placeholder={props.placeholder} />
               </SelectTrigger>
             </FormControl>

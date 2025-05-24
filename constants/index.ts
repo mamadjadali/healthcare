@@ -8,22 +8,14 @@ export const PatientFormDefaultValues = {
   birthDate: new Date(Date.now()),
   gender: "male" as Gender,
   address: "",
-  occupation: "",
   emergencyContactName: "",
   emergencyContactNumber: "",
   primaryPhysician: "",
-  insuranceProvider: "",
   insurancePolicyNumber: "",
   allergies: "",
   currentMedication: "",
   familyMedicalHistory: "",
   pastMedicalHistory: "",
-  identificationType: "Birth Certificate",
-  identificationNumber: "",
-  identificationDocument: [],
-  treatmentConsent: false,
-  disclosureConsent: false,
-  privacyConsent: false,
 };
 
 export const IdentificationTypes = [
