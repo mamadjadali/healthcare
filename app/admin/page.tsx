@@ -1,3 +1,4 @@
+import { AppointmentOverview } from "@/components/appointment-status-chart";
 import { StatCard } from "@/components/StatCard";
 import { columns } from "@/components/table/columns";
 import { DataTable } from "@/components/table/DataTable";
@@ -9,10 +10,13 @@ const AdminPage = async () => {
   return (
     <div className="mx-auto flex max-w-7xl flex-col space-y-14">
       <main className="admin-main">
-        <section className="my-6 w-2/5 space-y-4">
-          <h1 className="header text-dark-700">Welcome</h1>
-          <p className="text-dark-700">Managing Appointments</p>
-        </section>
+        {/* <section className="my-6 flex w-full flex-col justify-between space-y-4 md:flex-row">
+          <div>
+            <h1 className="header text-dark-700">Welcome</h1>
+            <p className="text-dark-700">Managing Appointments</p>
+          </div> */}
+        <AppointmentOverview />
+        {/* </section> */}
 
         <section className="admin-stat">
           <StatCard
