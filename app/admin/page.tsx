@@ -15,7 +15,10 @@ const AdminPage = async () => {
             <h1 className="header text-dark-700">Welcome</h1>
             <p className="text-dark-700">Managing Appointments</p>
           </div> */}
+          <div className="justify-center">
+
         <AppointmentOverview />
+          </div>
         {/* </section> */}
 
         <section className="admin-stat">

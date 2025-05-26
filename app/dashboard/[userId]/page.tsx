@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 
+import { StatusBadge } from "@/components/StatusBadge";
 import UserSetting from "@/components/UserSetting"; // Ensure the path is correct
 import { getPatientAppointments } from "@/lib/actions/patient.actions";
 import { Appointment } from "@/types/appwrite.types";
@@ -51,15 +52,15 @@ const PatientDashboard = ({ params }: PatientDashboardProps) => {
         <header className="admin-header">
           <Link href="/" className="cursor-pointer">
             <Image
-              src="/assets/icons/Doxset.svg"
-              height={32}
-              width={162}
+              src="/assets/images/logo-typo.svg"
+              height={81}
+              width={361}
               alt="logo"
-              className="h-8 w-fit"
+              className="h-10 w-fit"
             />
           </Link>
 
-          <UserSetting />
+          {/* <UserSetting /> */}
           {/* <p className="text-16-semibold">Patient Dashboard</p> */}
         </header>
 
@@ -92,10 +93,10 @@ const PatientDashboard = ({ params }: PatientDashboardProps) => {
       </div>
 
       <div className="mx-auto max-w-7xl p-2 md:p-12">
-        <div className="overflow-x-auto">
+        <div className="overflow-hidden overflow-x-auto rounded-xl shadow-md sm:border sm:border-gray-400">
           {/* Desktop Table */}
-          <table className="hidden border-collapse overflow-hidden rounded-xl bg-white shadow-md md:table md:min-w-full">
-            <thead className="bg-gray-200 text-gray-700">
+          <table className="hidden min-w-full bg-transparent md:table">
+            <thead className="border-b border-gray-400 bg-transparent text-gray-400">
               <tr>
                 <th className="px-4 py-3 text-left text-sm font-semibold uppercase tracking-wider">
                   Date
@@ -111,22 +112,24 @@ const PatientDashboard = ({ params }: PatientDashboardProps) => {
                 </th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-gray-200 bg-white">
+            <tbody className="divide-y divide-gray-200 bg-transparent">
               {appointments.map((appointment) => (
                 <tr
                   key={appointment.$id}
-                  className="transition-colors duration-150 hover:bg-gray-100"
+                  className="transition-colors duration-150 hover:bg-gray-100 hover:text-gray-800"
                 >
-                  <td className="whitespace-nowrap px-4 py-3 text-sm text-gray-800">
+                  <td className="whitespace-nowrap px-4 py-3 text-sm  text-gray-400">
                     {new Date(appointment.schedule).toLocaleDateString()}
                   </td>
-                  <td className="px-4 py-3 text-sm text-gray-800">
+                  <td className="px-4 py-3 text-sm text-gray-400">
                     {appointment.primaryPhysician}
                   </td>
-                  <td className="px-4 py-3 text-sm text-gray-800">
+                  <td className="px-4 py-3 text-sm text-gray-400">
+                    <StatusBadge status={appointment.status}>
                     {appointment.status}
+                    </StatusBadge>
                   </td>
-                  <td className="px-4 py-3 text-sm text-gray-800">
+                  <td className="px-4 py-3 text-sm text-gray-400">
                     {appointment.reason}
                   </td>
                 </tr>
@@ -139,21 +142,23 @@ const PatientDashboard = ({ params }: PatientDashboardProps) => {
             {appointments.map((appointment) => (
               <div
                 key={appointment.$id}
-                className="mb-4 rounded-lg border bg-white p-4 shadow-md"
+                className="mb-4 rounded-xl border border-gray-400 bg-transparent p-4 shadow-md"
               >
                 <div className="flex justify-between">
-                  <div className="text-sm text-gray-800">
+                  <div className="text-sm text-gray-400">
                     {new Date(appointment.schedule).toLocaleDateString()}
                   </div>
-                  <div className="text-sm text-gray-800">
+                  <div className="text-sm text-gray-400">
+                    <StatusBadge status={appointment.status}>
                     {appointment.status}
+                    </StatusBadge>
                   </div>
                 </div>
                 <div className="mt-2 flex justify-between">
-                  <div className="text-sm text-gray-800">
+                  <div className="text-sm text-gray-400">
                     Doctor: {appointment.primaryPhysician}
                   </div>
-                  <div className="text-sm text-gray-800">
+                  <div className="text-sm text-gray-400">
                     Reason: {appointment.reason}
                   </div>
                 </div>

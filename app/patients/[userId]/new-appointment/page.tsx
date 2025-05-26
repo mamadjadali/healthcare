@@ -11,11 +11,11 @@ const Appointment = async ({ params: { userId } }: SearchParamProps) => {
       <section className="remove-scrollbar container my-auto">
         <div className="sub-container max-w-[860px] flex-1 justify-between">
           <Image
-            src="/assets/icons/Doxset.svg"
-            height={1000}
-            width={1000}
+            src="/assets/images/logo-typo.svg"
+            height={81}
+            width={361}
             alt="logo"
-            className="mb-12 h-10 w-fit"
+            className="mx-auto mb-12 h-14 w-fit"
           />
 
           <AppointmentForm
