@@ -1,11 +1,14 @@
 import Image from "next/image";
 
 import { AppointmentForm } from "@/components/forms/AppointmentForm";
-import { getPatient } from "@/lib/actions/patient.actions";
+import { getPatient, getUser } from "@/lib/actions/patient.actions";
 
 const Appointment = async ({ params: { userId } }: SearchParamProps) => {
-  const patient = await getPatient(userId);
+  const authUser = await getUser(userId);
+  const patient = await getPatient(authUser.$id);
 
+  console.log("Auth user ID:", authUser.$id);
+  console.log("Patient ID:", patient?.$id);
   return (
     <div className="flex h-screen max-h-screen">
       <section className="remove-scrollbar container my-auto">
@@ -20,7 +23,7 @@ const Appointment = async ({ params: { userId } }: SearchParamProps) => {
 
           <AppointmentForm
             patientId={patient?.$id}
-            userId={userId}
+            userId={authUser.$id}
             type="create"
           />
 

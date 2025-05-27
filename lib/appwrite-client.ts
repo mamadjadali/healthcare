@@ -1,7 +1,7 @@
 // lib/appwrite.config.ts
 import { Client, Account } from "appwrite";
 
-const client = new Client();
+export const client = new Client();
 
 client
   .setEndpoint(process.env.NEXT_PUBLIC_ENDPOINT!) // must start with NEXT_PUBLIC_ to be accessible in browser
