@@ -10,7 +10,7 @@ import {
   DATABASE_ID,
   databases,
   messaging,
-} from "../appwrite.config";
+} from "../appwrite-server";
 import { formatDateTime, parseStringify } from "../utils";
 
 //  CREATE APPOINTMENT
