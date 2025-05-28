@@ -26,43 +26,92 @@ export const PasskeyModal = () => {
   const [open, setOpen] = useState(false);
   const [passkey, setPasskey] = useState("");
   const [error, setError] = useState("");
+  const phone = "09212513436";
 
-  const encryptedKey =
-    typeof window !== "undefined"
-      ? window.localStorage.getItem("accessKey")
-      : null;
+  const sendAdminOTP = async () => {
+    try {
+      const res = await fetch("/api/send-otp", {
+        method: "POST",
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ phone }),
+      });
+
+      const data = await res.json();
+
+      if (data.success) {
+        console.log("OTP sent to admin phone");
+      } else {
+        console.error("Failed to send OTP:", data.error);
+        setError(data.error === 'Active OTP already exists. Please wait.' 
+          ? "An OTP has already been sent. Please check your phone or try again later."
+          : "Failed to send OTP. Please try again.");
+      }
+    } catch (err) {
+      console.error("Error sending OTP:", err);
+      setError("Error sending OTP. Please try again.");
+    }
+  };
+
+  
 
   useEffect(() => {
+    const encryptedKey = typeof window !== "undefined" ? localStorage.getItem("accessKey") : null;
     const accessKey = encryptedKey && decryptKey(encryptedKey);
 
-    if (path)
-      if (accessKey === process.env.NEXT_PUBLIC_ADMIN_PASSKEY!.toString()) {
-        setOpen(false);
-        router.push("/admin");
-      } else {
-        setOpen(true);
-      }
-  }, [encryptedKey]);
+    if (accessKey === "verified") {
+      setOpen(false);
+      router.push("/admin");
+    } else if (path) {
+      setOpen(true);
+      sendAdminOTP();
+    }
+  }, [path]);
 
   const closeModal = () => {
     setOpen(false);
     router.push("/");
   };
 
-  const validatePasskey = (
+  const validatePasskey = async (
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => {
     e.preventDefault();
-
-    if (passkey === process.env.NEXT_PUBLIC_ADMIN_PASSKEY) {
-      const encryptedKey = encryptKey(passkey);
-
-      localStorage.setItem("accessKey", encryptedKey);
-
-      setOpen(false);
-    } else {
-      setError("Invalid passkey. Please try again.");
+    if (!passkey || passkey.length !== 6) {
+      setError("Please enter a 6-digit OTP.");
+      return;
     }
+
+    try {
+      const res = await fetch("/api/verify-otp", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ phone, code: passkey }),
+      });
+      const data = await res.json();
+
+      if (data.success) {
+        // Store a generic token to indicate successful verification
+        const encryptedKey = encryptKey("verified");
+        localStorage.setItem("accessKey", encryptedKey);
+        setOpen(false);
+        router.push("/admin");
+      } else {
+        setError(data.error || "Invalid OTP. Please try again.");
+      }
+    } catch (err) {
+      console.error("Error verifying OTP:", err);
+      setError("Error verifying OTP. Please try again.");
+    }
+  };
+
+  const resendOTP = async () => {
+    setError("");
+    setPasskey("");
+    await sendAdminOTP();
   };
 
   return (
@@ -105,13 +154,19 @@ export const PasskeyModal = () => {
               {error}
             </p>
           )}
+          <button
+            onClick={resendOTP}
+            className="text-14-regular mt-4 flex justify-center text-blue-500 hover:underline"
+          >
+            Resend OTP
+          </button>
         </div>
         <AlertDialogFooter>
           <AlertDialogAction
             onClick={(e) => validatePasskey(e)}
             className="shad-primary-btn w-full"
           >
-            Enter Admin Passkey
+            Verify OTP
           </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>
