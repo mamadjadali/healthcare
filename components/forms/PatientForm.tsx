@@ -1,26 +1,23 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { ID } from "appwrite";
 import { motion } from "framer-motion";
-// import { useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
 import { Form } from "@/components/ui/form";
 import { FADE_IN_VARIANTS } from "@/constants/animation";
-// import { createUser } from "@/lib/actions/patient.actions";
-import { account } from "@/lib/appwrite-client";
+import { createUser } from "@/lib/actions/patient.actions";
 import { UserFormValidation } from "@/lib/validation";
 
 import "react-phone-number-input/style.css";
 import CustomFormField, { FormFieldType } from "../CustomFormField";
 import SubmitButton from "../SubmitButton";
 
-
 export const PatientForm = () => {
-  // const router = useRouter();
+  const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
 
   const form = useForm<z.infer<typeof UserFormValidation>>({
@@ -36,23 +33,22 @@ export const PatientForm = () => {
     setIsLoading(true);
 
     try {
-       // Store name and phone in localStorage (used after login redirect)
-      localStorage.setItem("patient:name", values.name);
-      localStorage.setItem("patient:phone", values.phone);
+      const user = {
+        name: values.name,
+        email: values.email,
+        phone: values.phone,
+      };
 
-      // Magic URL login
-      await account.createMagicURLToken(
-        ID.unique(), // user-defined session ID
-        values.email,
-        `${window.location.origin}/auth/callback` // Redirect after user clicks email link
-      );
+      const newUser = await createUser(user);
 
-      alert("Check your email to continue");
+      if (newUser) {
+        router.push(`/patients/${newUser.$id}/register`);
+      }
     } catch (error) {
-      console.error("Login error", error);
-    } finally {
-      setIsLoading(false);
+      console.log(error);
     }
+
+    setIsLoading(false);
   };
 
   return (

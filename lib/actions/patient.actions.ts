@@ -12,7 +12,7 @@ import {
   databases,
   storage,
   users,
-} from "../appwrite-server";
+} from "../appwrite.config";
 import { parseStringify } from "../utils";
 
 // CREATE APPWRITE USER
