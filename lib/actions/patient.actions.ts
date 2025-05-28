@@ -21,10 +21,10 @@ export const createUser = async (user: CreateUserParams) => {
     // Create new user -> https://appwrite.io/docs/references/1.5.x/server-nodejs/users#create
     const newuser = await users.create(
       ID.unique(),
-      user.email,
-      user.phone,
+      // user.email,
       undefined,
-      user.name
+      user.phone,
+      // user.name
     );
 
     return parseStringify(newuser);
@@ -32,7 +32,7 @@ export const createUser = async (user: CreateUserParams) => {
     // Check existing user
     if (error && error?.code === 409) {
       const existingUser = await users.list([
-        Query.equal("email", [user.email]),
+        Query.equal("phone", [user.phone]),
       ]);
 
       return existingUser.users[0];

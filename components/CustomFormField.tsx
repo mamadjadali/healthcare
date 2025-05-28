@@ -46,7 +46,7 @@ const RenderInput = ({ field, props }: { field: any; props: CustomProps }) => {
   switch (props.fieldType) {
     case FormFieldType.INPUT:
       return (
-        <div className="flex rounded-md border border-dark-500 bg-dark-400">
+        <div className="flex rounded-xl border border-gray-400 bg-transparent">
           {props.iconSrc && (
             <Image
               src={props.iconSrc}
@@ -60,7 +60,7 @@ const RenderInput = ({ field, props }: { field: any; props: CustomProps }) => {
             <Input
               placeholder={props.placeholder}
               {...field}
-              className="shad-input border-0 text-dark-700"
+              className="border-0 bg-transparent text-dark-700"
             />
           </FormControl>
         </div>
@@ -71,7 +71,7 @@ const RenderInput = ({ field, props }: { field: any; props: CustomProps }) => {
           <Textarea
             placeholder={props.placeholder}
             {...field}
-            className="shad-textArea text-dark-700"
+            className="shad-textArea bg-transparent text-gray-400"
             disabled={props.disabled}
           />
         </FormControl>
@@ -86,7 +86,7 @@ const RenderInput = ({ field, props }: { field: any; props: CustomProps }) => {
             withCountryCallingCode
             value={field.value as E164Number | undefined}
             onChange={field.onChange}
-            className="input-phone text-dark-700"
+            className="input-phone bg-transparent text-gray-400"
           />
         </FormControl>
       );
@@ -107,7 +107,7 @@ const RenderInput = ({ field, props }: { field: any; props: CustomProps }) => {
       );
     case FormFieldType.DATE_PICKER:
       return (
-        <div className="flex rounded-md border border-dark-500 bg-dark-400 text-dark-700">
+        <div className="flex rounded-xl border border-gray-400 bg-transparent text-gray-400">
           <Image
             src="/assets/icons/calendar.svg"
             height={24}
