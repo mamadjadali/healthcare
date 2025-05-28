@@ -4,15 +4,9 @@ import { PatientForm } from "@/components/forms/PatientForm";
 import { PasskeyModal } from "@/components/PasskeyModal";
 import { LogoStatic } from "@/public/assets/icons/LogoStatic";
 
-const Home = async ({ searchParams }: SearchParamProps) => {
+const Home = ({ searchParams }: SearchParamProps) => {
   const isAdmin = searchParams?.admin === "true";
-  // const user = await getCurrentUser();
-  // console.log(user);
-  // if (user) {
-  //   // If user is logged in, redirect to dashboard
-  //   redirect("/dashboard");
-  //   return null;
-  // }
+
   return (
     <div className="flex h-screen max-h-screen">
       {isAdmin && <PasskeyModal />}

@@ -56,7 +56,6 @@ export const AppointmentForm = ({
   const onSubmit = async (
     values: z.infer<typeof AppointmentFormValidation>
   ) => {
-    console.log("Submitting form:", values);
     setIsLoading(true);
 
     let status;
@@ -91,10 +90,10 @@ export const AppointmentForm = ({
             `/patients/${userId}/new-appointment/success?appointmentId=${newAppointment.$id}`
           );
         }
-      } else if (appointment?.$id) {
+      } else {
         const appointmentToUpdate = {
           userId,
-          appointmentId: appointment.$id,
+          appointmentId: appointment?.$id!,
           appointment: {
             primaryPhysician: values.primaryPhysician,
             schedule: new Date(values.schedule),
