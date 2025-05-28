@@ -15,15 +15,14 @@ export async function POST(req: NextRequest) {
     const { phone } = await req.json();
     console.log(`[PID: ${process.pid}] Received phone: "${phone}" (length: ${phone.length})`);
 
-    if (!phone || !/^09\d{9}$/.test(phone)) {
+    if (!phone || !/^09\d{9}$/.test(phone.trim())) {
       return NextResponse.json({ error: 'Invalid phone number' }, { status: 400 });
     }
 
-    // Check for existing OTP *before* generating a new one
-    const existing = otpStore.get(phone);
+    const existing = await otpStore.get(phone); // Await the Promise
     if (existing) {
       console.log(`[PID: ${process.pid}] Active OTP exists for "${phone}": ${existing}`);
-      return NextResponse.json({ error: 'Active OTP already exists' }, { status: 429 });
+      return NextResponse.json({ error: 'An OTP has already been sent. Please wait.' }, { status: 429 });
     }
 
     const code = Math.floor(100000 + Math.random() * 900000).toString();
@@ -41,7 +40,7 @@ export async function POST(req: NextRequest) {
     const data = await response.json();
 
     if (data.return && data.return.status === 200) {
-      otpStore.set(phone, code);
+      await otpStore.set(phone, code);
       return NextResponse.json({ success: true, message: 'SMS sent' });
     } else {
       console.error(`[PID: ${process.pid}] Kavenegar error:`, data);
@@ -49,6 +48,6 @@ export async function POST(req: NextRequest) {
     }
   } catch (error) {
     console.error(`[PID: ${process.pid}] SMS error:`, error);
-    return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 });
+    return NextResponse.json({ error: `Internal Server Error: ${error.message}` }, { status: 500 });
   }
 }

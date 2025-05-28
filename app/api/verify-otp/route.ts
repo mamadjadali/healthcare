@@ -13,7 +13,7 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: 'Phone and code are required' }, { status: 400 });
     }
 
-    const storedCode = otpStore.get(phone);
+    const storedCode = await otpStore.get(phone); // Await the Promise
     console.log(`[PID: ${process.pid}] Verifying OTP for "${phone}": received=${code}, stored=${storedCode}`);
 
     if (!storedCode) {
@@ -21,13 +21,13 @@ export async function POST(req: NextRequest) {
     }
 
     if (storedCode === code.toString()) {
-      otpStore.delete(phone);
+      await otpStore.delete(phone);
       return NextResponse.json({ success: true, phone });
     }
 
     return NextResponse.json({ error: 'Invalid OTP' }, { status: 401 });
   } catch (error) {
     console.error(`[PID: ${process.pid}] Verify OTP error:`, error);
-    return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 });
+    return NextResponse.json({ error: `Internal Server Error: ${error.message}` }, { status: 500 });
   }
 }

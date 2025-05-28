@@ -13,6 +13,8 @@ import {
 } from "../appwrite.config";
 import { formatDateTime, parseStringify } from "../utils";
 
+import { sendKavenegarSMS } from "./sendsms";
+
 //  CREATE APPOINTMENT
 export const createAppointment = async (
   appointment: CreateAppointmentParams
@@ -135,8 +137,10 @@ export const updateAppointment = async ({
 
     if (!updatedAppointment) throw Error;
 
-    const smsMessage = `Greetings from CarePulse. ${type === "schedule" ? `Your appointment is confirmed for ${formatDateTime(appointment.schedule!, timeZone).dateTime} with Dr. ${appointment.primaryPhysician}` : `We regret to inform that your appointment for ${formatDateTime(appointment.schedule!, timeZone).dateTime} is cancelled. Reason:  ${appointment.cancellationReason}`}.`;
-    await sendSMSNotification(userId, smsMessage);
+    await sendKavenegarSMS({
+      receptor: appointment.patient.phone, // e.g., "09123456789"
+      message: `یادآوری: وقت شما در کلینیک پوست برای تاریخ ${appointment.date} و ساعت ${appointment.time} رزرو شده است.`,
+    });
 
     revalidatePath("/admin");
     return parseStringify(updatedAppointment);

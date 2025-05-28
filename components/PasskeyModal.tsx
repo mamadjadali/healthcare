@@ -1,3 +1,4 @@
+// components/PasskeyModal.tsx
 "use client";
 
 import Image from "next/image";
@@ -26,15 +27,20 @@ export const PasskeyModal = () => {
   const [open, setOpen] = useState(false);
   const [passkey, setPasskey] = useState("");
   const [error, setError] = useState("");
+  const [isSending, setIsSending] = useState(false);
+
   const phone = "09212513436";
 
   const sendAdminOTP = async () => {
+    if (isSending) {
+      console.log("OTP request already in progress");
+      return false;
+    }
+    setIsSending(true);
     try {
       const res = await fetch("/api/send-otp", {
         method: "POST",
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ phone }),
       });
 
@@ -42,31 +48,49 @@ export const PasskeyModal = () => {
 
       if (data.success) {
         console.log("OTP sent to admin phone");
+        return true;
       } else {
         console.error("Failed to send OTP:", data.error);
-        setError(data.error === 'Active OTP already exists. Please wait.' 
-          ? "An OTP has already been sent. Please check your phone or try again later."
-          : "Failed to send OTP. Please try again.");
+        setError(
+          data.error === "An OTP has already been sent. Please wait."
+            ? "An OTP has already been sent. Please check your phone or try again in 5 minutes."
+            : data.error || "Failed to send OTP. Please try again."
+        );
+        return false;
       }
     } catch (err) {
       console.error("Error sending OTP:", err);
       setError("Error sending OTP. Please try again.");
+      return false;
+    } finally {
+      setIsSending(false);
     }
   };
 
-  
-
   useEffect(() => {
-    const encryptedKey = typeof window !== "undefined" ? localStorage.getItem("accessKey") : null;
-    const accessKey = encryptedKey && decryptKey(encryptedKey);
+    let isMounted = true;
 
-    if (accessKey === "verified") {
-      setOpen(false);
-      router.push("/admin");
-    } else if (path) {
-      setOpen(true);
-      sendAdminOTP();
-    }
+    const checkAccess = async () => {
+      const encryptedKey = typeof window !== "undefined" ? localStorage.getItem("accessKey") : null;
+      const accessKey = encryptedKey && decryptKey(encryptedKey);
+
+      if (accessKey === "verified") {
+        setOpen(false);
+        router.push("/admin");
+      } else if (path && isMounted) {
+        setOpen(true);
+        const success = await sendAdminOTP();
+        if (!success) {
+          console.log("Initial OTP send failed");
+        }
+      }
+    };
+
+    checkAccess();
+
+    return () => {
+      isMounted = false;
+    };
   }, [path]);
 
   const closeModal = () => {
@@ -74,10 +98,10 @@ export const PasskeyModal = () => {
     router.push("/");
   };
 
-  const validatePasskey = async (
-    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
-  ) => {
+  const validatePasskey = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
+    console.log(`Client sending OTP: ${passkey}`);
+
     if (!passkey || passkey.length !== 6) {
       setError("Please enter a 6-digit OTP.");
       return;
@@ -86,15 +110,12 @@ export const PasskeyModal = () => {
     try {
       const res = await fetch("/api/verify-otp", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ phone, code: passkey }),
       });
       const data = await res.json();
 
       if (data.success) {
-        // Store a generic token to indicate successful verification
         const encryptedKey = encryptKey("verified");
         localStorage.setItem("accessKey", encryptedKey);
         setOpen(false);
@@ -130,7 +151,7 @@ export const PasskeyModal = () => {
             />
           </AlertDialogTitle>
           <AlertDialogDescription>
-            To access the admin page, please enter the passkey.
+            To access the admin page, please enter the 6-digit OTP sent to your phone.
           </AlertDialogDescription>
         </AlertDialogHeader>
         <div>
@@ -157,8 +178,9 @@ export const PasskeyModal = () => {
           <button
             onClick={resendOTP}
             className="text-14-regular mt-4 flex justify-center text-blue-500 hover:underline"
+            disabled={isSending}
           >
-            Resend OTP
+            {isSending ? "Sending OTP..." : "Resend OTP"}
           </button>
         </div>
         <AlertDialogFooter>
