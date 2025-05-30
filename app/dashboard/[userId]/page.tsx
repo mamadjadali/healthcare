@@ -49,7 +49,7 @@ const PatientDashboard = ({ params }: PatientDashboardProps) => {
   return (
     <>
       <div className="mx-auto flex max-w-7xl flex-col space-y-14">
-        <header className="admin-header">
+        <header className="sticky top-3 z-20 mx-3 flex items-center justify-between rounded-2xl border border-gray-400 bg-transparent px-[5%] py-5 shadow-lg xl:px-12">
           <Link href="/" className="cursor-pointer">
             <Image
               src="/assets/images/logo-typo.svg"
@@ -126,7 +126,7 @@ const PatientDashboard = ({ params }: PatientDashboardProps) => {
                   </td>
                   <td className="px-4 py-3 text-sm text-gray-400">
                     <StatusBadge status={appointment.status}>
-                    {appointment.status}
+                      {appointment.status}
                     </StatusBadge>
                   </td>
                   <td className="px-4 py-3 text-sm text-gray-400">
@@ -150,7 +150,7 @@ const PatientDashboard = ({ params }: PatientDashboardProps) => {
                   </div>
                   <div className="text-sm text-gray-400">
                     <StatusBadge status={appointment.status}>
-                    {appointment.status}
+                      {appointment.status}
                     </StatusBadge>
                   </div>
                 </div>
