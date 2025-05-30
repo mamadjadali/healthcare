@@ -20,7 +20,6 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { decryptKey } from "@/lib/utils";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -52,7 +51,7 @@ export function DataTable<TData, TValue>({
   return (
     <div className="data-table">
       <Table className="shad-table">
-        <TableHeader className=" bg-dark-200">
+        <TableHeader className=" bg-transparent">
           {table.getHeaderGroups().map((headerGroup) => (
             <TableRow key={headerGroup.id} className="shad-table-row-header">
               {headerGroup.headers.map((header) => {

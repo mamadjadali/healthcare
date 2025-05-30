@@ -83,7 +83,7 @@
 
   /* ===== ADMIN */
   .admin-header {
-    @apply sticky top-3 z-20 mx-3 flex items-center justify-between rounded-2xl bg-dark-200 px-[5%] py-5 shadow-lg xl:px-12;
+    @apply sticky top-3 z-20 mx-3 flex items-center justify-between rounded-2xl bg-transparent px-[5%] py-5 shadow-lg xl:px-12;
   }
 
   .admin-main {
@@ -243,7 +243,7 @@
   }
 
   .shad-table-row-header {
-    @apply border-b border-gray-400 text-light-200 hover:bg-transparent !important;
+    @apply border-b border-gray-400 text-gray-400 hover:bg-transparent !important;
   }
 
   .shad-table-row {

@@ -8,7 +8,7 @@ const OverviewPage = async () => {
   const appointments = await getRecentAppointmentList();
 
   return (
-    <div className="mx-auto flex max-w-7xl flex-col space-y-14">
+    <div className="mx-auto flex max-w-7xl flex-col space-y-16">
       <main className="admin-main">
         {/* <section className="my-6 flex w-full flex-col justify-between space-y-4 md:flex-row">
           <div>
