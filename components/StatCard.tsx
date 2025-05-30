@@ -1,4 +1,3 @@
-import clsx from "clsx";
 import Image from "next/image";
 
 type StatCardProps = {
@@ -10,13 +9,7 @@ type StatCardProps = {
 
 export const StatCard = ({ count = 0, label, icon, type }: StatCardProps) => {
   return (
-    <div
-      className={clsx("stat-card", {
-        "bg-appointments": type === "appointments",
-        "bg-pending": type === "pending",
-        "bg-cancelled": type === "cancelled",
-      })}
-    >
+    <div className="stat-card bg-transparent">
       <div className="flex items-center gap-4">
         <Image
           src={icon}
