@@ -142,7 +142,7 @@ export const updateAppointment = async ({
       message: `یادآوری: وقت شما در کلینیک پوست برای تاریخ ${appointment.date} و ساعت ${appointment.time} رزرو شده است.`,
     });
 
-    revalidatePath("/admin");
+    revalidatePath("/admin/overview");
     return parseStringify(updatedAppointment);
   } catch (error) {
     console.error("An error occurred while scheduling an appointment:", error);

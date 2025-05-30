@@ -46,8 +46,8 @@ export function AppointmentOverview() {
 
   return (
     <>
-      <dl className="grid grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-3">
-        <Card className="col-span-2 p-6">
+      <dl className="grid grid-cols-1 gap-10 lg:grid-cols-3">
+        <Card className="col-span-full p-6 lg:col-span-2">
           <dt className="text-sm font-medium text-gray-400">
             Current Appointments
           </dt>
@@ -81,7 +81,7 @@ export function AppointmentOverview() {
             ))}
           </ul>
         </Card>
-        <Card className="sm:mx-auto sm:w-full">
+        <Card className="col-span-full sm:mx-auto lg:col-span-1">
           <div className="flex space-x-3">
             <span
               className="w-1 shrink-0 rounded bg-emerald-500"

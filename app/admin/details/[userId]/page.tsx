@@ -1,5 +1,7 @@
+import { HeartPulse, SettingsIcon, User2Icon } from "lucide-react";
 import { notFound } from "next/navigation";
 
+import { Button } from "@/components/ui/button";
 import { getPatient } from "@/lib/actions/patient.actions";
 
 type Params = {
@@ -14,130 +16,234 @@ const Details = async ({ params }: Params) => {
   if (!patient) return notFound();
 
   return (
-    <div className="h-screen max-h-screen">
-      <section className="remove-scrollbar container my-auto">
-        <div className="mx-auto size-full max-w-[860px] justify-between py-8">
-          {/* <pre>{JSON.stringify(patient, null, 2)}</pre> */}
-          <div className="grid grid-cols-1 gap-6 md:grid-cols-3 lg:grid-cols-4 ">
-            <div className="m-4 rounded-xl border border-gray-400 px-4 py-2 md:col-span-1">
-              <p className="text-gray-400">
-                Name:{" "}
-                <span className="pl-2 text-green-400">{patient.name}</span>
-              </p>
-            </div>
-            <div className="m-4 whitespace-pre-wrap break-words rounded-xl border border-gray-400 px-4 py-2 md:col-span-2">
-              <p className="text-gray-400">
-                User ID:{" "}
-                <span className="pl-2 text-green-400">{patient.userId}</span>
-              </p>
-            </div>
-            <div className="m-4 rounded-xl border border-gray-400 px-4 py-2">
-              <p className="text-gray-400">
-                Phone:{" "}
-                <span className="pl-2 text-green-400">{patient.phone}</span>
-              </p>
-            </div>
-            <div className="m-4 rounded-xl border border-gray-400 px-4 py-2">
-              <p className="text-gray-400">
-                Gender:{" "}
-                <span className="pl-2 text-green-400">{patient.gender}</span>
-              </p>
-            </div>
-            <div className="m-4 rounded-xl border border-gray-400 px-4 py-2 md:col-span-2">
-              <p className="text-gray-400">
-                Email:{" "}
-                <span className="pl-2 text-green-400">{patient.email}</span>
-              </p>
-            </div>
-            <div className="m-4 rounded-xl border border-gray-400 px-4 py-2 md:row-span-2">
-              <p className="text-gray-400">
-                Address:{" "}
-                <span className="pl-2 text-green-400">{patient.address}</span>
-              </p>
-            </div>
-            <div className="m-4 rounded-xl border border-gray-400 px-4 py-2">
-              <p className="text-gray-400">
-                Birth Date:{" "}
-                <span className="pl-2 text-green-400">
+    <section className="pb-32 pt-10">
+      <div className="container">
+        <div className="mx-auto max-w-xl">
+          <div className="text-center lg:text-left">
+            <h1 className="text-left text-3xl font-medium text-gray-400 md:text-4xl">
+              Patient Info
+            </h1>
+          </div>
+          <div className="mx-auto mt-6 flex flex-col gap-16 md:mt-14">
+            <div className="grid">
+              <div className="flex items-center justify-start gap-2 py-4 text-blue-400">
+                <User2Icon />
+                <h2 className="text-xl font-medium">Personal Information</h2>
+              </div>
+              <div className="flex items-center justify-between border-b py-4">
+                <p className="font-semibold text-gray-400 hover:underline">
+                  Name
+                </p>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  className="pointer-events-none rounded-xl"
+                >
+                  {patient.name}
+                </Button>
+              </div>
+              <div className="flex items-center justify-between border-b py-4">
+                <p className="font-semibold text-gray-400 hover:underline">
+                  Email
+                </p>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  className="pointer-events-none rounded-xl"
+                >
+                  {patient.email}
+                </Button>
+              </div>
+              <div className="flex items-center justify-between border-b py-4">
+                <p className="font-semibold text-gray-400 hover:underline">
+                  Phone
+                </p>
+                <div>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    className="pointer-events-none mr-3 rounded-xl"
+                  >
+                    {patient.phone}
+                  </Button>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    className="cursor-pointer rounded-xl border-none bg-emerald-400 text-white"
+                  >
+                    <a href={`tel:${patient.phone}`}>Call</a>
+                  </Button>
+                </div>
+              </div>
+              <div className="flex items-center justify-between border-b py-4">
+                <p className="font-semibold text-gray-400 hover:underline">
+                  Gender
+                </p>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  className="pointer-events-none rounded-xl"
+                >
+                  {patient.gender}
+                </Button>
+              </div>
+              <div className="flex items-center justify-between border-b py-4">
+                <p className="font-semibold text-gray-400 hover:underline">
+                  Address
+                </p>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  className="pointer-events-none rounded-xl"
+                >
+                  {patient.address}
+                </Button>
+              </div>
+              <div className="flex items-center justify-between border-b py-4">
+                <p className="font-semibold text-gray-400 hover:underline">
+                  Birth Date
+                </p>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  className="pointer-events-none rounded-xl"
+                >
                   {patient.birthDate.split("T")[0]}
-                </span>
-              </p>
-            </div>
-            <div className="m-4 rounded-xl border border-gray-400 px-4 py-2">
-              <p className="text-gray-400">
-                Emergency Contact Name:{" "}
-                <span className="pl-2 text-green-400">
+                </Button>
+              </div>
+              <div className="flex items-center justify-start gap-2 py-8 text-violet-400">
+                <HeartPulse />
+                <h2 className="text-xl font-medium">Medical Information</h2>
+              </div>
+              <div className="flex items-center justify-between border-b py-4">
+                <p className="font-semibold text-gray-400 hover:underline">
+                  Emergency Contact Name
+                </p>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  className="pointer-events-none rounded-xl"
+                >
                   {patient.emergencyContactName}
-                </span>
-              </p>
-            </div>
-            <div className="m-4 rounded-xl border border-gray-400 px-4 py-2">
-              <p className="text-gray-400">
-                Emergency Contact Number:{" "}
-                <span className="pl-2 text-green-400">
+                </Button>
+              </div>
+              <div className="flex items-center justify-between border-b py-4">
+                <p className="font-semibold text-gray-400 hover:underline">
+                  Emergency Contact Number
+                </p>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  className="pointer-events-none rounded-xl"
+                >
                   {patient.emergencyContactNumber}
-                </span>
-              </p>
-            </div>
-            <div className="m-4 rounded-xl border border-gray-400 px-4 py-2">
-              <p className="text-gray-400">
-                Allergies:{" "}
-                <span className="pl-2 text-green-400">{patient.allergies}</span>
-              </p>
-            </div>
-            <div className="m-4 rounded-xl border border-gray-400 px-4 py-2 md:col-span-2">
-              <p className="text-gray-400">
-                Current Medication:{" "}
-                <span className="pl-2 text-green-400">
-                  {patient.currentMedication}
-                </span>
-              </p>
-            </div>
-            <div className="m-4 rounded-xl border border-gray-400 px-4 py-2 md:row-span-2">
-              <p className="text-gray-400">
-                Family Medical History:{" "}
-                <span className="pl-2 text-green-400">
-                  {patient.familyMedicalHistory}
-                </span>
-              </p>
-            </div>
-            <div className="m-4 rounded-xl border border-gray-400 px-4 py-2 md:col-span-3">
-              <p className="text-gray-400">
-                Past Medical History:{" "}
-                <span className="pl-2 text-green-400">
-                  {patient.pastMedicalHistory}
-                </span>
-              </p>
-            </div>
-            <div className="m-4 rounded-xl border border-gray-400 px-4 py-2 md:col-span-2">
-              <p className="text-gray-400">
-                Insurance Number:{" "}
-                <span className="pl-2 text-green-400">
-                  {patient.insurancePolicyNumber}
-                </span>
-              </p>
-            </div>
-            <div className="m-4 rounded-xl border border-gray-400 px-4 py-2">
-              <p className="text-gray-400">
-                Primary Physician :{" "}
-                <span className="pl-2 text-green-400">
+                </Button>
+              </div>
+              <div className="flex items-center justify-between border-b py-4">
+                <p className="font-semibold text-gray-400 hover:underline">
+                  Primary Physician
+                </p>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  className="pointer-events-none rounded-xl"
+                >
                   {patient.primaryPhysician}
-                </span>
-              </p>
-            </div>
-            <div className="m-4 rounded-xl border border-gray-400 px-4 py-2">
-              <p className="text-gray-400">
-                Created At :{" "}
-                <span className="pl-2 text-green-400">
+                </Button>
+              </div>
+              <div className="flex items-center justify-between border-b py-4">
+                <p className="font-semibold text-gray-400 hover:underline">
+                  Insurance Policy Number
+                </p>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  className="pointer-events-none rounded-xl"
+                >
+                  {patient.insurancePolicyNumber}
+                </Button>
+              </div>
+              <div className="flex items-center justify-between border-b py-4">
+                <p className="font-semibold text-gray-400 hover:underline">
+                  Past Medical History
+                </p>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  className="pointer-events-none rounded-xl"
+                >
+                  {patient.pastMedicalHistory}
+                </Button>
+              </div>
+              <div className="flex items-center justify-between border-b py-4">
+                <p className="font-semibold text-gray-400 hover:underline">
+                  Family Medical History
+                </p>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  className="pointer-events-none rounded-xl"
+                >
+                  {patient.familyMedicalHistory}
+                </Button>
+              </div>
+              <div className="flex items-center justify-between border-b py-4">
+                <p className="font-semibold text-gray-400 hover:underline">
+                  Current Medication
+                </p>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  className="pointer-events-none rounded-xl"
+                >
+                  {patient.currentMedication}
+                </Button>
+              </div>
+              <div className="flex items-center justify-between border-b py-4">
+                <p className="font-semibold text-gray-400 hover:underline">
+                  Allergies
+                </p>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  className="pointer-events-none rounded-xl"
+                >
+                  {patient.allergies}
+                </Button>
+              </div>
+              <div className="flex items-center justify-start gap-2 py-8 text-emerald-400">
+                <SettingsIcon />
+                <h2 className="text-xl font-medium">User Information</h2>
+              </div>
+              <div className="flex items-center justify-between border-b py-4">
+                <p className="font-semibold text-gray-400 hover:underline">
+                  User Id
+                </p>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  className="pointer-events-none rounded-xl"
+                >
+                  {patient.userId}
+                </Button>
+              </div>
+              <div className="flex items-center justify-between border-b py-4">
+                <p className="font-semibold text-gray-400 hover:underline">
+                  Created At
+                </p>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  className="pointer-events-none rounded-xl"
+                >
                   {patient.$createdAt.split("T")[0]}
-                </span>
-              </p>
+                </Button>
+              </div>
             </div>
           </div>
-          <p className="copyright mt-10 py-12">© 2025 Doxset</p>
         </div>
-      </section>
-    </div>
+      </div>
+    </section>
   );
 };
 

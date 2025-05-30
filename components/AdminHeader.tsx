@@ -5,7 +5,7 @@ export const AdminHeader = () => {
   return (
     <div className="mx-auto max-w-7xl">
       <header className="admin-header mb-10 mt-6 border border-gray-400">
-        <Link href="/" className="cursor-pointer">
+        <Link href="/admin/overview" className="cursor-pointer">
           <Image
             src="/assets/images/logo-typo.svg"
             height={81}
