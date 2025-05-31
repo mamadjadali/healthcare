@@ -8,7 +8,7 @@ export default function Loading() {
         alt="loader"
         width={40}
         height={3240}
-        className="animate-spin"
+        className="animate-spin text-white"
       />
       Loading...
     </div>

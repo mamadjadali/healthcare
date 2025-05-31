@@ -27,14 +27,6 @@ const Appointment = async ({ params: { userId } }: SearchParamProps) => {
           <p className="copyright mt-10 py-12">© 2025 Doxset</p>
         </div>
       </section>
-
-      {/* <Image
-        src="/assets/images/appointment-img.svg"
-        height={1500}
-        width={1500}
-        alt="appointment"
-        className="side-img max-w-[390px] rounded-l-3xl bg-bottom"
-      /> */}
     </div>
   );
 };

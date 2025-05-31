@@ -5,7 +5,7 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 
 import { StatusBadge } from "@/components/StatusBadge";
-import UserSetting from "@/components/UserSetting"; // Ensure the path is correct
+// import UserSetting from "@/components/UserSetting"; // Ensure the path is correct
 import { getPatientAppointments } from "@/lib/actions/patient.actions";
 import { Appointment } from "@/types/appwrite.types";
 

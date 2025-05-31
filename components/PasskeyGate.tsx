@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useCallback, useEffect, useState } from "react";
 
@@ -10,6 +9,8 @@ import {
   InputOTPSlot,
 } from "@/components/ui/input-otp";
 import { decryptKey, encryptKey } from "@/lib/utils";
+
+import { Button } from "./ui/button";
 
 export const PasskeyGate = () => {
   const [passkey, setPasskey] = useState("");
@@ -89,18 +90,10 @@ export const PasskeyGate = () => {
   if (!showGate) return null;
 
   return (
-    <div className="flex min-h-screen flex-col items-center justify-center px-6">
-      <div className="w-full max-w-md space-y-6 rounded-lg border p-6 shadow-lg">
+    <div className="flex h-screen max-h-screen items-center justify-center px-6">
+      <div className="remove-scrollbar container my-auto max-w-2xl space-y-6 p-6">
         <div className="flex items-center justify-between">
-          <h1 className="text-lg font-bold">Admin OTP Access</h1>
-          <Image
-            src="/assets/icons/close.svg"
-            alt="close"
-            width={20}
-            height={20}
-            className="cursor-pointer"
-            onClick={() => router.push("/")}
-          />
+          <h1 className="text-lg font-bold text-gray-400">Admin OTP Access</h1>
         </div>
         <p className="text-sm text-gray-400">
           Enter the 6-digit OTP sent to your phone.
@@ -113,7 +106,11 @@ export const PasskeyGate = () => {
         >
           <InputOTPGroup className="shad-otp">
             {[...Array(6)].map((_, i) => (
-              <InputOTPSlot key={i} className="shad-otp-slot" index={i} />
+              <InputOTPSlot
+                key={i}
+                className="shad-otp-slot text-gray-400"
+                index={i}
+              />
             ))}
           </InputOTPGroup>
         </InputOTP>
@@ -121,20 +118,21 @@ export const PasskeyGate = () => {
         {error && <p className="text-sm text-red-500">{error}</p>}
 
         <div className="flex items-center justify-between">
-          <button
+          <Button
+            variant="ghost"
             onClick={sendAdminOTP}
             disabled={isSending}
-            className="text-sm text-blue-500 hover:underline"
+            className="rounded-xl text-sm text-white"
           >
             {isSending ? "Resending..." : "Resend OTP"}
-          </button>
+          </Button>
 
-          <button
+          <Button
             onClick={handleSubmit}
-            className="shad-primary-btn rounded bg-blue-600 px-4 py-2 text-white hover:bg-blue-700"
+            className="shad-primary-btn rounded-xl px-6 py-2"
           >
             Verify OTP
-          </button>
+          </Button>
         </div>
       </div>
     </div>
