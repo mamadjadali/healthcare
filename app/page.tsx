@@ -1,16 +1,11 @@
 import Link from "next/link";
 
 import { PatientForm } from "@/components/forms/PatientForm";
-import { PasskeyModal } from "@/components/PasskeyModal";
 import { LogoStatic } from "@/public/assets/icons/LogoStatic";
 
-const Home = ({ searchParams }: SearchParamProps) => {
-  const isAdmin = searchParams?.admin === "true";
-
+const Home = () => {
   return (
     <div className="flex h-screen max-h-screen">
-      {isAdmin && <PasskeyModal />}
-
       <section className="remove-scrollbar container my-auto">
         <div className="sub-container max-w-[400px]">
           <div className="mb-6 flex flex-col items-center justify-center gap-2">

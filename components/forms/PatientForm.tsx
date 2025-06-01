@@ -23,8 +23,6 @@ export const PatientForm = () => {
   const form = useForm<z.infer<typeof UserFormValidation>>({
     resolver: zodResolver(UserFormValidation),
     defaultValues: {
-      // name: "",
-      // email: "",
       phone: "",
     },
   });
@@ -34,8 +32,6 @@ export const PatientForm = () => {
 
     try {
       const user = {
-        // name: values.name,
-        // email: values.email,
         phone: values.phone,
       };
 
@@ -58,26 +54,6 @@ export const PatientForm = () => {
           onSubmit={form.handleSubmit(onSubmit)}
           className="flex-1 space-y-6"
         >
-          {/* <CustomFormField
-            fieldType={FormFieldType.INPUT}
-            control={form.control}
-            name="name"
-            label="Full name"
-            placeholder="John Doe"
-            iconSrc="/assets/icons/user.svg"
-            iconAlt="user"
-          />
-
-          <CustomFormField
-            fieldType={FormFieldType.INPUT}
-            control={form.control}
-            name="email"
-            label="Email"
-            placeholder="johndoe@gmail.com"
-            iconSrc="/assets/icons/email.svg"
-            iconAlt="email"
-          /> */}
-
           <CustomFormField
             fieldType={FormFieldType.PHONE_INPUT}
             control={form.control}
