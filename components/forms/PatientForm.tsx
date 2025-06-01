@@ -5,6 +5,7 @@ import { motion } from "framer-motion";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
+import { toast } from "sonner";
 import { z } from "zod";
 
 import { Form } from "@/components/ui/form";
@@ -38,9 +39,11 @@ export const PatientForm = () => {
       const newUser = await createUser(user);
 
       if (newUser) {
+        toast.success("User created successfully!");
         router.push(`/patients/${newUser.$id}/register`);
       }
     } catch (error) {
+      toast.error("Failed to create user.");
       console.log(error);
     }
 

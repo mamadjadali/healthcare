@@ -1,6 +1,7 @@
 "use client";
 import { useParams, useRouter } from "next/navigation";
 import React, { useState } from "react";
+import { toast } from "sonner";
 
 import { Button } from "@/components/ui/tremor/Button";
 import {
@@ -21,11 +22,12 @@ export default function RouteChoose() {
   const router = useRouter();
   const params = useParams();
   const userId = params?.userId;
-
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setLoading(true);
+    const toastId = toast.loading("Routing...");
     setTimeout(() => {
+      toast.dismiss(toastId);
       router.push(`/patients/${userId}${selectedRoute}`);
     }, 600);
   };

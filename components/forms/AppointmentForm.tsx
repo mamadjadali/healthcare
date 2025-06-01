@@ -5,6 +5,7 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { Dispatch, SetStateAction, useState } from "react";
 import { useForm } from "react-hook-form";
+import { toast } from "sonner";
 import { z } from "zod";
 
 import { SelectItem } from "@/components/ui/select";
@@ -83,7 +84,7 @@ export const AppointmentForm = ({
         };
 
         const newAppointment = await createAppointment(appointment);
-
+        toast.success("Appointment Created successfully!");
         if (newAppointment) {
           form.reset();
           router.push(

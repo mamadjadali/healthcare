@@ -1,22 +1,21 @@
-"use client"; // Marking this as a Client Component
+"use client";
 
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 
 import { StatusBadge } from "@/components/StatusBadge";
-// import UserSetting from "@/components/UserSetting"; // Ensure the path is correct
 import { getPatientAppointments } from "@/lib/actions/patient.actions";
 import { Appointment } from "@/types/appwrite.types";
 
 interface PatientDashboardProps {
   params: {
-    userId: string; // Define the type for userId
+    userId: string;
   };
 }
 
 const PatientDashboard = ({ params }: PatientDashboardProps) => {
-  const { userId } = params; // Get userId from params
+  const { userId } = params;
 
   const [appointments, setAppointments] = useState<Appointment[]>([]);
   const [loading, setLoading] = useState(true);
@@ -41,14 +40,14 @@ const PatientDashboard = ({ params }: PatientDashboardProps) => {
   if (loading) {
     return (
       <div className="flex h-screen items-center justify-center">
-        <div className="text-lg font-semibold">Loading...</div>
+        <div className="text-lg font-semibold text-gray-400">Loading...</div>
       </div>
     ); // Optional loading state
   }
 
   return (
     <>
-      <div className="mx-auto flex max-w-7xl flex-col space-y-14">
+      <div className="mx-auto flex max-w-6xl flex-col space-y-14">
         <header className="sticky top-3 z-20 mx-3 flex items-center justify-between rounded-2xl border border-gray-400 bg-transparent px-[5%] py-5 shadow-lg xl:px-12">
           <Link href="/" className="cursor-pointer">
             <Image
@@ -59,40 +58,17 @@ const PatientDashboard = ({ params }: PatientDashboardProps) => {
               className="h-10 w-fit"
             />
           </Link>
-
-          {/* <UserSetting /> */}
-          {/* <p className="text-16-semibold">Patient Dashboard</p> */}
         </header>
 
-        <main className="admin-main">
+        <main className="admin-main max-w-6xl">
           <section className="w-full space-y-4">
-            <h1 className="header">Welcome 👋🏻</h1>
+            <h1 className="header text-gray-400">Welcome 👋🏻</h1>
             <p className="text-dark-700">Your Appointment History</p>
           </section>
-          {/* <section className="admin-stat">
-          <StatCard
-            type="appointments"
-            count={appointments.scheduledCount}
-            label="Scheduled appointments"
-            icon={"/assets/icons/appointments.svg"}
-          />
-          <StatCard
-            type="pending"
-            count={appointments.pendingCount}
-            label="Pending appointments"
-            icon={"/assets/icons/pending.svg"}
-          />
-          <StatCard
-            type="cancelled"
-            count={appointments.cancelledCount}
-            label="Cancelled appointments"
-            icon={"/assets/icons/cancelled.svg"}
-          />
-        </section> */}
         </main>
       </div>
 
-      <div className="mx-auto max-w-7xl p-2 md:p-12">
+      <div className="mx-auto max-w-6xl p-2 md:p-12">
         <div className="overflow-hidden overflow-x-auto rounded-xl shadow-md sm:border sm:border-gray-400">
           {/* Desktop Table */}
           <table className="hidden min-w-full bg-transparent md:table">
@@ -116,7 +92,7 @@ const PatientDashboard = ({ params }: PatientDashboardProps) => {
               {appointments.map((appointment) => (
                 <tr
                   key={appointment.$id}
-                  className="transition-colors duration-150 hover:bg-gray-100 hover:text-gray-800"
+                  className="transition-colors duration-150"
                 >
                   <td className="whitespace-nowrap px-4 py-3 text-sm  text-gray-400">
                     {new Date(appointment.schedule).toLocaleDateString()}
@@ -125,9 +101,7 @@ const PatientDashboard = ({ params }: PatientDashboardProps) => {
                     {appointment.primaryPhysician}
                   </td>
                   <td className="px-4 py-3 text-sm text-gray-400">
-                    <StatusBadge status={appointment.status}>
-                      {appointment.status}
-                    </StatusBadge>
+                    <StatusBadge status={appointment.status} />
                   </td>
                   <td className="px-4 py-3 text-sm text-gray-400">
                     {appointment.reason}
@@ -149,9 +123,7 @@ const PatientDashboard = ({ params }: PatientDashboardProps) => {
                     {new Date(appointment.schedule).toLocaleDateString()}
                   </div>
                   <div className="text-sm text-gray-400">
-                    <StatusBadge status={appointment.status}>
-                      {appointment.status}
-                    </StatusBadge>
+                    <StatusBadge status={appointment.status} />
                   </div>
                 </div>
                 <div className="mt-2 flex justify-between">

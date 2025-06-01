@@ -86,8 +86,8 @@ const RequestSuccess = async ({
             </Link>
           </Button>
 
-          <Button variant="outline" className="shad-primary-btn" asChild>
-            <Link href={`/dashboard/${userId}`}>Go to Dashboard</Link>
+          <Button variant="ghost" className="text-gray-400" asChild>
+            <Link href={`/patients/${userId}/onboarding`}>Back</Link>
           </Button>
         </div>
 
