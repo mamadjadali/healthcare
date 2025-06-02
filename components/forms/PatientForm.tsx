@@ -1,7 +1,6 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { motion } from "framer-motion";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
@@ -9,7 +8,6 @@ import { toast } from "sonner";
 import { z } from "zod";
 
 import { Form } from "@/components/ui/form";
-import { FADE_IN_VARIANTS } from "@/constants/animation";
 import { createUser } from "@/lib/actions/patient.actions";
 import { UserFormValidation } from "@/lib/validation";
 
@@ -51,7 +49,10 @@ export const PatientForm = () => {
   };
 
   return (
-    <motion.div variants={FADE_IN_VARIANTS} animate="visible" initial="hidden">
+      <div
+        className="motion-safe:animate-revealBottom"
+        style={{ animationDuration: "500ms" }}
+      >
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
@@ -68,6 +69,6 @@ export const PatientForm = () => {
           <SubmitButton isLoading={isLoading}>Get Started</SubmitButton>
         </form>
       </Form>
-    </motion.div>
+    </div>
   );
 };
