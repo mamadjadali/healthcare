@@ -1,10 +1,10 @@
 /* eslint-disable no-unused-vars */
 import { E164Number } from "libphonenumber-js/core";
 import Image from "next/image";
-import ReactDatePicker from "react-datepicker";
 import { Control } from "react-hook-form";
 import PhoneInput from "react-phone-number-input";
 
+import { AppointmentPickerSheet } from "./AppointmentPicker";
 import { Checkbox } from "./ui/checkbox";
 import {
   FormControl,
@@ -116,14 +116,27 @@ const RenderInput = ({ field, props }: { field: any; props: CustomProps }) => {
             className="ml-2"
           />
           <FormControl>
-            <ReactDatePicker
+            {/* <ReactDatePicker
               showTimeSelect={props.showTimeSelect ?? false}
               selected={field.value}
               onChange={(date: Date) => field.onChange(date)}
               timeInputLabel="Time:"
               dateFormat={props.dateFormat ?? "MM/dd/yyyy"}
               wrapperClassName="date-picker"
-            />
+            /> */}
+            {/* <DatePicker
+            value={field.value}
+            onChange={(date) => field.onChange(date?.toDate?.() ?? null)}
+            calendar={persian}
+            locale={persianFa}
+            format={props.dateFormat ?? "YYYY/MM/DD"}
+            plugins={props.showTimeSelect ? [<TimePicker key="time-picker" position="bottom" />] : []}
+            calendarPosition="bottom-left"
+            // animations={[transition()]}
+            className="bg-transparent text-gray-700"
+            containerClassName="date-picker"
+          /> */}
+          <AppointmentPickerSheet  onChange={(date: Date) => field.onChange(date)} />
           </FormControl>
         </div>
       );
