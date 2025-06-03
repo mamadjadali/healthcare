@@ -1,3 +1,4 @@
+import { ArrowLeftIcon, CircleFadingPlus } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { toast } from "sonner";
@@ -30,7 +31,7 @@ const RequestSuccess = async ({
   return (
     <div className=" flex h-screen max-h-screen px-[5%]">
       <div className="success-img">
-        <Link href="/">
+        {/* <Link href="/">
           <Image
             src="/assets/images/logo-typo.svg"
             height={81}
@@ -38,15 +39,20 @@ const RequestSuccess = async ({
             alt="logo"
             className="mb-8 h-14 w-fit"
           />
-        </Link>
+        </Link> */}
 
         <section className="flex flex-col items-center gap-4">
-          <Image
+          {/* <Image
             src="/assets/images/Success.svg"
             height={100}
             width={100}
             alt="success"
-          />
+            className="animate-pulse"
+          /> */}
+          <span className="relative mb-4 flex size-10">  
+            <span className="absolute inline-flex size-full animate-ping rounded-full bg-green-400 opacity-75"></span>
+            <span className="relative inline-flex size-10 rounded-full bg-green-500"></span>
+            </span>
           <h2 className="header mb-6 max-w-[600px] text-center text-dark-700">
             Your <span className="text-green-500">appointment request</span> has
             been successfully submitted!
@@ -80,15 +86,21 @@ const RequestSuccess = async ({
         </section>
 
         <div className="flex gap-4">
-          <Button variant="outline" className="shad-primary-btn" asChild>
+          <Button variant="ghost" className="group items-center justify-center text-gray-400 hover:bg-transparent hover:text-gray-400">
+            <ArrowLeftIcon
+              className="-ms-1 mr-1 opacity-60 transition-transform group-hover:-translate-x-2"
+              size={16}
+              aria-hidden="true"
+            />
+            <Link href={`/patients/${userId}/onboarding`}>Back</Link>
+          </Button>
+          <Button variant="outline" className="shad-primary-btn items-center rounded-xl">
             <Link href={`/patients/${userId}/new-appointment`}>
               New Appointment
             </Link>
+            <CircleFadingPlus className="mx-2" />
           </Button>
 
-          <Button variant="ghost" className="text-gray-400" asChild>
-            <Link href={`/patients/${userId}/onboarding`}>Back</Link>
-          </Button>
         </div>
 
         <p className="copyright">© 2024 Doxset</p>
