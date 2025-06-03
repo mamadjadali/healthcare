@@ -1,6 +1,7 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import { CircleFadingPlus } from "lucide-react";
+import { useEffect, useState } from "react";
 
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetClose, SheetContent, SheetFooter, SheetTrigger } from "@/components/ui/sheet";
@@ -63,7 +64,10 @@ export function AppointmentPickerSheet({ onChange }: Props) {
   return (
     <Sheet>
       <SheetTrigger asChild>
-        <Button variant="outline">Pick Appointment</Button>
+        <Button variant="outline" className="w-full items-center rounded-xl border-none bg-transparent">
+          Pick Appointment
+         <CircleFadingPlus className="ml-2"/>
+        </Button>
       </SheetTrigger>
       <SheetContent className="w-[90vw] overflow-auto bg-[#121212] sm:w-[500px]">
         <div className="p-4">
