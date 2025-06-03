@@ -83,7 +83,7 @@ export default function RouteChoose() {
         <div className="mt-6 flex justify-end">
           <Button
             variant="primary"
-            className="disabled:bg-gray-300 disabled:text-gray-600"
+            className="rounded-xl disabled:bg-gray-300 disabled:text-gray-600"
             type="submit"
             disabled={!selectedRoute || loading}
             aria-disabled={!selectedRoute || loading}
