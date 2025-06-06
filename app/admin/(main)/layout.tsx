@@ -30,7 +30,7 @@ export default function AdminLayout({
     <html lang="en">
       <body
         className={cn(
-          "min-h-screen bg-[#121212] font-sans antialiased",
+          "min-h-screen bg-[#09090b] font-sans antialiased",
           fontSans.variable
         )}
       >
