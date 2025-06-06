@@ -9,30 +9,45 @@ export async function sendKavenegarSMS({
   const sender = process.env.KAVENEGAR_SENDER;
 
   if (!apiKey || !sender) {
-    throw new Error("Kavenegar API Key or Sender is missing");
+    console.warn("Kavenegar API Key or Sender is missing. SMS will not be sent.");
+    return null;
   }
 
-  const receptors = Array.isArray(receptor) ? receptor.join(",") : receptor;
+  try {
+    const receptors = Array.isArray(receptor) ? receptor.join(",") : receptor;
 
-  const url = `https://api.kavenegar.com/v1/${apiKey}/sms/send.json`;
+    const url = `https://api.kavenegar.com/v1/${apiKey}/verify/lookup.json`;
 
-  const params = new URLSearchParams({
-    receptor: receptors,
-    sender,
-    message,
-  });
+    const params = new URLSearchParams({
+      receptor: receptors,
+      token: message,
+      template: "appointment", // You need to create this template in your Kavenegar panel
+      type: "sms",
+    });
 
-  const res = await fetch(`${url}?${params.toString()}`);
+    const res = await fetch(`${url}?${params.toString()}`, {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
+    });
 
-  if (!res.ok) {
-    throw new Error(`Kavenegar API error: ${res.statusText}`);
+    if (!res.ok) {
+      console.error(`Kavenegar API error: ${res.statusText}`);
+      return null;
+    }
+
+    const data = await res.json();
+
+    if (data.return?.status !== 200) {
+      console.error(`Kavenegar failed: ${data.return?.message}`);
+      return null;
+    }
+
+    return data.entries;
+  } catch (error) {
+    console.error("Error sending SMS:", error);
+    return null;
   }
-
-  const data = await res.json();
-
-  if (data.return.status !== 200) {
-    throw new Error(`Kavenegar failed: ${data.return.message}`);
-  }
-
-  return data.entries; // contains info about each message sent
 }

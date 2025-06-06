@@ -137,15 +137,31 @@ export const updateAppointment = async ({
 
     if (!updatedAppointment) throw Error;
 
-    await sendKavenegarSMS({
-      receptor: appointment.patient.phone, // e.g., "09123456789"
-      message: `یادآوری: وقت شما در کلینیک پوست برای تاریخ ${appointment.date} و ساعت ${appointment.time} رزرو شده است.`,
-    });
+    // Get the complete appointment data to access patient information
+    const completeAppointment = await databases.getDocument(
+      DATABASE_ID!,
+      APPOINTMENT_COLLECTION_ID!,
+      appointmentId
+    ) as Appointment;
+
+    if (completeAppointment?.patient?.phone) {
+      try {
+        const formattedDateTime = formatDateTime(completeAppointment.schedule);
+        await sendKavenegarSMS({
+          receptor: completeAppointment.patient.phone,
+          message: `یادآوری: وقت شما در کلینیک پوست برای تاریخ ${formattedDateTime.dateOnly} و ساعت ${formattedDateTime.timeOnly} رزرو شده است.`,
+        });
+      } catch (smsError) {
+        console.error("Failed to send SMS notification:", smsError);
+        // Continue with the appointment update even if SMS fails
+      }
+    }
 
     revalidatePath("/admin/overview");
     return parseStringify(updatedAppointment);
   } catch (error) {
     console.error("An error occurred while scheduling an appointment:", error);
+    throw error; // Re-throw the error to be handled by the caller
   }
 };
 
