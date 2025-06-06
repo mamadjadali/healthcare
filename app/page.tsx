@@ -1,14 +1,21 @@
-
 import { PatientForm } from "@/components/forms/PatientForm";
 import { LogoStatic } from "@/public/assets/icons/LogoStatic";
 
+// { searchParams }: { searchParams: { lang?: string } }
+
 const Home = () => {
+  // const locale = (searchParams.lang as Locale) || "en";
+
+  // if (!["en", "fa"].includes(locale)) notFound();
+
+  // const t = getTranslation(locale);
   return (
     <div className="flex h-screen max-h-screen">
       <section className="remove-scrollbar container my-auto">
         <div className="sub-container max-w-[400px] ">
           <div className="mb-6 flex flex-col items-center justify-center gap-2">
             <LogoStatic className="mb-2 size-20" />
+            {/* <p className="text-gray-400">{t.welcome}</p> */}
             <p className="text-dark-700">Get started with appointments.</p>
           </div>
 
