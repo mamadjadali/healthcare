@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 
+import Navigate from "@/components/Navigate";
 import { StatusBadge } from "@/components/StatusBadge";
 import { getPatientAppointments } from "@/lib/actions/patient.actions";
 import { Appointment } from "@/types/appwrite.types";
@@ -48,7 +49,7 @@ const PatientDashboard = ({ params }: PatientDashboardProps) => {
   return (
     <>
       <div className="mx-auto flex max-w-6xl flex-col space-y-14">
-        <header className="sticky top-3 z-20 mx-3 flex items-center justify-between rounded-2xl border border-gray-400 bg-transparent px-[5%] py-5 shadow-lg xl:px-12">
+        <header className="sticky top-3 z-20 mx-3 flex items-center justify-between rounded-2xl border border-gray-400 bg-[#09090b] px-[5%] py-5 shadow-lg xl:px-12">
           <Link href="/" className="cursor-pointer">
             <Image
               src="/assets/images/logo-typo.svg"
@@ -64,6 +65,7 @@ const PatientDashboard = ({ params }: PatientDashboardProps) => {
           <section className="w-full space-y-4">
             <h1 className="header text-gray-400">Welcome 👋🏻</h1>
             <p className="text-dark-700">Your Appointment History</p>
+            <Navigate />
           </section>
         </main>
       </div>
