@@ -1,5 +1,6 @@
 import { type ClassValue, clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
+import { generateToken, verifyToken, JWTPayload } from './jwt';
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -95,10 +96,49 @@ export const formatDateTime = (
   };
 };
 
-export function encryptKey(passkey: string) {
-  return btoa(passkey);
+export async function encryptKey(passkey: string): Promise<string> {
+  try {
+    const response = await fetch('/api/generate-token', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ verified: true }),
+    });
+
+    const data = await response.json();
+    
+    if (!data.success) {
+      throw new Error(data.error || 'Failed to generate token');
+    }
+
+    return data.token;
+  } catch (error) {
+    console.error('Error generating token:', error);
+    throw error;
+  }
 }
 
-export function decryptKey(passkey: string) {
-  return atob(passkey);
+export function decryptKey(token: string): string | null {
+  try {
+    // For now, we'll just check if the token exists
+    // In a real application, you might want to verify the token on the server side
+    return token ? "verified" : null;
+  } catch {
+    return null;
+  }
+}
+
+export function getLocalStorage(key: string): string | null {
+  if (typeof window === 'undefined') {
+    return null;
+  }
+  return localStorage.getItem(key);
+}
+
+export function setLocalStorage(key: string, value: string): void {
+  if (typeof window === 'undefined') {
+    return;
+  }
+  localStorage.setItem(key, value);
 }

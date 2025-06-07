@@ -1,7 +1,20 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { Button } from "./ui/button";
+import { setLocalStorage } from "@/lib/utils";
 
 export const AdminHeader = () => {
+  const router = useRouter();
+
+  const handleSignOut = () => {
+    setLocalStorage("accessKey", "");
+    router.push("/");
+    router.refresh();
+  };
+
   return (
     <div className="mx-auto max-w-7xl">
       <header className="admin-header mb-10 mt-6 border border-gray-400">
@@ -15,7 +28,16 @@ export const AdminHeader = () => {
           />
         </Link>
 
-        <p className="text-16-semibold text-gray-400">Admin Dashboard</p>
+        <div className="flex items-center gap-4">
+          <p className="text-16-semibold text-gray-400">Admin Dashboard</p>
+          <Button
+            variant="ghost"
+            onClick={handleSignOut}
+            className="text-sm text-gray-400 hover:text-white"
+          >
+            Sign Out
+          </Button>
+        </div>
       </header>
     </div>
   );

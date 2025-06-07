@@ -69,7 +69,7 @@ export function AppointmentPickerSheet({ onChange }: Props) {
          <CircleFadingPlus className="ml-2"/>
         </Button>
       </SheetTrigger>
-      <SheetContent className="w-[90vw] overflow-auto bg-[#121212] sm:w-[500px]">
+      <SheetContent className="w-[90vw] overflow-auto bg-[#09090b] sm:w-[500px]">
         <div className="p-4">
           <h3 className="mb-4 text-xl font-semibold text-gray-400">Select a Day</h3>
           <div className="mb-6 grid grid-cols-3 gap-3">
@@ -86,10 +86,9 @@ export function AppointmentPickerSheet({ onChange }: Props) {
                     setSelectedDate(date);
                     setSelectedTime("");
                   }}
-                  className={`flex cursor-pointer flex-col items-center justify-center rounded-lg border p-3 motion-safe:animate-revealBottom
+                  className={`flex cursor-pointer flex-col items-center justify-center rounded-xl border p-3
                     ${isSelected ? "border-2 border-green-400 bg-transparent text-green-400" : "border-gray-400 text-gray-400"}
                     hover:border-green-500 `}
-                  style={{ animationDuration: "500ms" }}
                 >
                   <span className="font-bold">{dayName}</span>
                   <span className="text-lg">{dayNum}</span>

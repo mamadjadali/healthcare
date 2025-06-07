@@ -8,17 +8,24 @@ import {
   InputOTPGroup,
   InputOTPSlot,
 } from "@/components/ui/input-otp";
-import { decryptKey, encryptKey } from "@/lib/utils";
+import { decryptKey, encryptKey, getLocalStorage, setLocalStorage } from "@/lib/utils";
+import { JWTError } from "@/lib/jwt";
 
 import { Button } from "./ui/button";
+import { EmergencyLoginModal } from "./EmergencyLoginModal";
 
 export const PasskeyGate = () => {
   const [passkey, setPasskey] = useState("");
   const [error, setError] = useState("");
   const [isSending, setIsSending] = useState(false);
   const [showGate, setShowGate] = useState(false);
+  const [isClient, setIsClient] = useState(false);
   const router = useRouter();
   const phone = "09214966425";
+
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
 
   const sendAdminOTP = useCallback(async () => {
     if (isSending) return false;
@@ -41,23 +48,42 @@ export const PasskeyGate = () => {
     } finally {
       setIsSending(false);
     }
-  }, [phone]); // Removed isSending from dependencies
+  }, [phone]);
 
   useEffect(() => {
-    const checkGate = async () => {
-      const encryptedKey = localStorage.getItem("accessKey");
-      const accessKey = encryptedKey && decryptKey(encryptedKey);
+    if (!isClient) return;
 
-      if (accessKey === "verified") {
-        router.push("/admin/overview");
-      } else {
-        setShowGate(true);
-        await sendAdminOTP(); // Only called once on mount
+    const checkGate = async () => {
+      try {
+        const encryptedKey = getLocalStorage("accessKey");
+        if (!encryptedKey) {
+          setShowGate(true);
+          await sendAdminOTP();
+          return;
+        }
+
+        const accessKey = decryptKey(encryptedKey);
+        if (accessKey === "verified") {
+          router.push("/admin/overview");
+        } else {
+          setShowGate(true);
+          await sendAdminOTP();
+        }
+      } catch (err) {
+        if (err instanceof JWTError) {
+          console.error("JWT Error:", err.message);
+          setLocalStorage("accessKey", "");
+          setShowGate(true);
+          await sendAdminOTP();
+        } else {
+          console.error("Unexpected error:", err);
+          setError("An unexpected error occurred");
+        }
       }
     };
 
     checkGate();
-  }, [router]); // Removed sendAdminOTP from dependencies
+  }, [router, sendAdminOTP, isClient]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -74,26 +100,36 @@ export const PasskeyGate = () => {
       });
 
       const data = await res.json();
+      console.log("Verification response:", data);
+
       if (data.success) {
-        const encryptedKey = encryptKey("verified");
-        localStorage.setItem("accessKey", encryptedKey);
-        router.push("/admin/overview");
+        try {
+          const encryptedKey = await encryptKey("verified");
+          setLocalStorage("accessKey", encryptedKey);
+          console.log("Token stored, redirecting...");
+          router.push("/admin/overview");
+          router.refresh();
+        } catch (tokenErr) {
+          console.error("Error storing token:", tokenErr);
+          setError("Error storing authentication token. Please try again.");
+        }
       } else {
         setError(data.error || "Invalid OTP");
       }
     } catch (err) {
-      console.error(err);
-      setError("Error verifying OTP");
+      console.error("Error verifying OTP:", err);
+      setError("Error verifying OTP. Please try again.");
     }
   };
 
-  if (!showGate) return null;
+  if (!isClient || !showGate) return null;
 
   return (
     <div className="flex h-screen max-h-screen items-center justify-center px-6">
       <div className="remove-scrollbar container my-auto max-w-2xl space-y-6 p-6">
         <div className="flex items-center justify-between">
           <h1 className="text-lg font-bold text-gray-400">Admin OTP Access</h1>
+          <EmergencyLoginModal />
         </div>
         <p className="text-sm text-gray-400">
           Enter the 6-digit OTP sent to your phone.

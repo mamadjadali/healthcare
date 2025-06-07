@@ -1,10 +1,12 @@
+"use client";
+
 import { PasskeyGate } from "@/components/PasskeyGate";
 
-const AdminPage = async () => {
+const AdminPage = () => {
   return (
-    <section>
+    <main className="flex min-h-screen flex-col">
       <PasskeyGate />
-    </section>
+    </main>
   );
 };
 

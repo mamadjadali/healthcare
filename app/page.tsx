@@ -1,34 +1,26 @@
 import { PatientForm } from "@/components/forms/PatientForm";
 import { LogoStatic } from "@/public/assets/icons/LogoStatic";
 
-// { searchParams }: { searchParams: { lang?: string } }
-
 const Home = () => {
-  // const locale = (searchParams.lang as Locale) || "en";
-
-  // if (!["en", "fa"].includes(locale)) notFound();
-
-  // const t = getTranslation(locale);
   return (
-    <div className="flex h-screen max-h-screen">
-      <section className="remove-scrollbar container my-auto">
-        <div className="sub-container max-w-[400px] ">
+    <main className="flex min-h-screen w-full items-center justify-center">
+      <section className="container">
+        <div className="mx-auto max-w-[400px]">
           <div className="mb-6 flex flex-col items-center justify-center gap-2">
             <LogoStatic className="mb-2 size-20" />
-            {/* <p className="text-gray-400">{t.welcome}</p> */}
             <p className="text-dark-700">Get started with appointments.</p>
           </div>
 
           <PatientForm />
 
           <div className="text-14-regular mt-20 flex justify-center">
-            <p className="justify-items-end text-dark-600 xl:text-left">
+            <p className="text-dark-600">
               © 2025 Doxset
             </p>
           </div>
         </div>
       </section>
-    </div>
+    </main>
   );
 };
 
