@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { Button } from "./ui/button";
 import { setLocalStorage } from "@/lib/utils";
+import { LogOut } from "lucide-react";
 
 export const AdminHeader = () => {
   const router = useRouter();
@@ -33,9 +34,9 @@ export const AdminHeader = () => {
           <Button
             variant="ghost"
             onClick={handleSignOut}
-            className="text-sm text-gray-400 hover:text-white"
+            className="text-sm text-gray-400"
           >
-            Sign Out
+            <LogOut />
           </Button>
         </div>
       </header>

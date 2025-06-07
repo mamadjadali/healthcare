@@ -13,14 +13,19 @@ import {
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { encryptKey, setLocalStorage } from "@/lib/utils";
+import { OctagonAlert, Loader2 } from "lucide-react";
 
 export const EmergencyLoginModal = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [token, setToken] = useState("");
   const [error, setError] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
 
   const handleEmergencyLogin = async () => {
+    setIsLoading(true);
+    setError("");
+    
     try {
       const res = await fetch("/api/verify-emergency", {
         method: "POST",
@@ -41,6 +46,8 @@ export const EmergencyLoginModal = () => {
     } catch (err) {
       console.error("Emergency login error:", err);
       setError("Error verifying emergency token");
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -49,8 +56,9 @@ export const EmergencyLoginModal = () => {
       <DialogTrigger asChild>
         <Button
           variant="ghost"
-          className="text-sm text-gray-400 hover:text-white"
+          className="text-sm text-gray-400"
         >
+          <OctagonAlert className="text-red-500 mx-2" />
           Emergency Access
         </Button>
       </DialogTrigger>
@@ -66,14 +74,22 @@ export const EmergencyLoginModal = () => {
               value={token}
               onChange={(e) => setToken(e.target.value)}
               className="text-gray-400"
+              disabled={isLoading}
             />
             {error && <p className="text-sm text-red-500">{error}</p>}
           </div>
           <Button
             onClick={handleEmergencyLogin}
-            className="shad-primary-btn"
+            disabled={isLoading}
           >
-            Verify Emergency Token
+            {isLoading ? (
+              <>
+                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                Verifying...
+              </>
+            ) : (
+              "Verify Emergency Token"
+            )}
           </Button>
         </div>
       </DialogContent>
