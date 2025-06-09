@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import { Toaster } from "sonner";
 
 import { AdminHeader } from "@/components/AdminHeader";
-import { cn } from "@/lib/utils";
 
 export const metadata: Metadata = {
   title: "Doxset",

@@ -34,3 +34,15 @@ export interface Appointment extends Models.Document {
   userId: string;
   cancellationReason: string | null;
 }
+
+export interface Settings extends Models.Document {
+  workingDays: string[];
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface TimeSettings extends Models.Document {
+  timeSlots: string[];
+  createdAt: string;
+  updatedAt: string;
+}

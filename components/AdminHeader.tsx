@@ -6,6 +6,8 @@ import { useRouter } from "next/navigation";
 import { Button } from "./ui/button";
 import { setLocalStorage } from "@/lib/utils";
 import { LogOut } from "lucide-react";
+import { SettingsSheet } from "@/components/SettingsSheet";
+import { TimeSettingsSheet } from "@/components/TimeSettingsSheet";
 
 export const AdminHeader = () => {
   const router = useRouter();
@@ -30,7 +32,8 @@ export const AdminHeader = () => {
         </Link>
 
         <div className="flex items-center gap-4">
-          <p className="text-16-semibold text-gray-400">Admin Dashboard</p>
+          <SettingsSheet />
+          <TimeSettingsSheet />
           <Button
             variant="ghost"
             onClick={handleSignOut}
