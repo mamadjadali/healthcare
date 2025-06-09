@@ -87,7 +87,7 @@ export function SettingsSheet() {
     <Sheet>
       <SheetTrigger asChild>
         <Button variant="ghost" className="text-sm text-gray-400">
-          <Calendar className="h-4 w-4" />
+          <Calendar className="" />
           
         </Button>
       </SheetTrigger>

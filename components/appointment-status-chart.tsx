@@ -9,6 +9,7 @@ import {
 import { useEffect, useState } from "react";
 
 import { Card } from "@/components/ui/tremor/card";
+import { Skeleton } from "@/components/ui/skeleton";
 import { getRecentAppointmentList } from "@/lib/actions/appointment.actions";
 
 type AppointmentStats = {
@@ -20,14 +21,53 @@ type AppointmentStats = {
 
 export function AppointmentOverview() {
   const [stats, setStats] = useState<AppointmentStats | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     async function fetchStats() {
-      const data = await getRecentAppointmentList();
-      setStats(data);
+      try {
+        const data = await getRecentAppointmentList();
+        setStats(data);
+      } finally {
+        setIsLoading(false);
+      }
     }
     fetchStats();
   }, []);
+
+  if (isLoading) {
+    return (
+      <dl className="grid grid-cols-1 gap-10 lg:grid-cols-3">
+        <Card className="col-span-full p-6 lg:col-span-2">
+          <Skeleton className="h-5 w-48" />
+          <Skeleton className="mt-1 h-10 w-24" />
+          <Skeleton className="mt-6 h-4 w-full" />
+          <div className="mt-4 flex flex-wrap gap-x-10 gap-y-4">
+            {[1, 2, 3].map((i) => (
+              <div key={i} className="flex items-center gap-2">
+                <Skeleton className="h-5 w-8" />
+                <Skeleton className="h-4 w-24" />
+              </div>
+            ))}
+          </div>
+        </Card>
+        <Card className="col-span-full p-6 sm:mx-auto lg:col-span-1">
+          <div className="flex space-x-3">
+            <Skeleton className="h-full w-1" />
+            <div className="flex-1">
+              <Skeleton className="h-6 w-32" />
+              <Skeleton className="mt-2 h-5 w-40" />
+              <div className="mt-4 flex flex-wrap gap-2">
+                {[1, 2, 3].map((i) => (
+                  <Skeleton key={i} className="h-8 w-32" />
+                ))}
+              </div>
+            </div>
+          </div>
+        </Card>
+      </dl>
+    );
+  }
 
   if (!stats) return null;
 

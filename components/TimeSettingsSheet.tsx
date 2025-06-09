@@ -90,7 +90,7 @@ export function TimeSettingsSheet() {
     <Sheet>
       <SheetTrigger asChild>
         <Button variant="ghost" size="icon" className="text-sm text-gray-400">
-          <Clock className="h-4 w-4" />
+          <Clock className="" />
         </Button>
       </SheetTrigger>
       <SheetContent className="p-4 text-gray-400">
